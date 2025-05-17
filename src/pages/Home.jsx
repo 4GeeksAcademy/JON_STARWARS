@@ -1,16 +1,21 @@
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import React from "react";
+import { Link } from "react-router-dom";
+import OpeningCrawl from "../components/OpeningCrawl";
 
-export const Home = () => {
-
-  const {store, dispatch} =useGlobalReducer()
-
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-		</div>
-	);
-}; 
+export default function Home() {
+  const crawlText = `
+    A long time ago...
+    in a galaxy far,
+    far away...
+  `;
+  return (
+    <>
+      <OpeningCrawl text={crawlText} />
+      <div className="container text-center mt-5">
+        <Link to="/demo" className="btn btn-lg btn-primary">
+          Comenzar AventurA
+        </Link>
+      </div>
+    </>
+  );
+}
