@@ -1,33 +1,50 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { GlobalContext } from "../store";
+// src/components/CardItem.jsx
+import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
-export default function CardItem({ type, uid, name, urlImage, className="" }) {
-  const { state, addFavorite, removeFavorite } = useContext(GlobalContext);
-  const isFav = state.favorites.some(f => f.uid === uid);
+export default function CardItem({ item, onToggleFav, isFav }) {
+  const saberSnd = useRef(new Audio('/audio/saber-on.mp3'));
+  const playSaber = () => {
+    saberSnd.current.currentTime = 0;
+    saberSnd.current.play();
+  };
 
-  function handleFav() {
-    const item = { type, uid, name, urlImage };
-    isFav ? removeFavorite(item) : addFavorite(item);
-  }
+  const { uid, name, entity } = item;
+  const typeMap = { people: 'characters', planets: 'planets', vehicles: 'vehicles' };
+  const folder = typeMap[entity] || entity;
+  const imgUrl = `https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/${folder}/${uid}.jpg`;
+  const placeholder = '/img/placeholder.png';
 
   return (
-    <div className={`card ${className}`}>
-      <img
-        src={urlImage}
-        className="card-img-top"
-        alt={name}
-        onError={e => e.currentTarget.src = "/img/fallback.jpg"}
-      />
-      <div className="card-body text-center">
-        <h5 className="card-title text-light">{name}</h5>
-        <Link to={`/single/${type}/${uid}`} className="btn btn-sm btn-primary me-2">
-          Ver
-        </Link>
-        <button onClick={handleFav} className="btn btn-sm btn-databank">
-          {isFav ? "Quitar" : "Favorito"}
-        </button>
+    <li className="col item" onMouseEnter={playSaber}>
+      <div
+        className="card-dark entity-container ratio-16x9"
+        onClick={playSaber}
+      >
+        <div className="image-container">
+          <img
+            className="image-card"
+            src={imgUrl}
+            alt={name}
+            onError={e => (e.currentTarget.src = placeholder)}
+          />
+          <button
+            className={`entity-fav-btn${isFav ? ' active' : ''}`}
+            onClick={e => {
+              e.stopPropagation();
+              onToggleFav(item);
+            }}
+            aria-label={isFav ? 'Quitar favorito' : 'Añadir favorito'}
+          >
+            ♥
+          </button>
+        </div>
+        <div className="details-container">
+          <Link to={`/${entity}/${uid}`} className="title-link">
+            <h3 className="details-container-title">{name}</h3>
+          </Link>
+        </div>
       </div>
-    </div>
+    </li>
   );
 }

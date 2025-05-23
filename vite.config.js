@@ -1,13 +1,14 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+// vite.config.js
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [react()],
-  css: {
-    preprocessorOptions: {
-      scss: {
-        includePaths: ["node_modules"]
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://swapi.py4e.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '/api')
       }
     }
   }
-});
+})

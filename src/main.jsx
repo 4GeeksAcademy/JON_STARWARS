@@ -1,12 +1,20 @@
+// src/main.jsx
 import React from "react";
-import ReactDOM from "react-dom";
-import "./index.scss";
-import AppRoutes from "./routes";
-import { StoreProvider } from "./store";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
-ReactDOM.render(
+import App from "./App";
+import "./scss/custom.scss";
+
+// IMPORTA tu StoreProvider
+import { StoreProvider } from "./store/useGlobalReducer";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  // 🔴 Aquí es donde debe ir el Provider
   <StoreProvider>
-    <AppRoutes />
-  </StoreProvider>,
-  document.getElementById("root")
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StoreProvider>
 );

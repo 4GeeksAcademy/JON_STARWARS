@@ -1,13 +1,52 @@
+// src/services/swapi.js
+
 const BASE = "https://www.swapi.tech/api";
 
-export async function getAll(type) {
-  const res = await fetch(`${BASE}/${type}`);
-  const { results } = await res.json();
-  return results;
+async function fetchJson(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`SWAPI error ${res.status}`);
+  return res.json();
 }
 
-export async function getOne(type, uid) {
-  const res = await fetch(`${BASE}/${type}/${uid}`);
-  const { result } = await res.json();
-  return result;
+/**
+ * Trae todos los ítems de un recurso y devuelve array de { uid, name, entity }.
+ * Acepta tanto la forma `data.results` como `data.result.results`
+ */
+export async function getAll(resource) {
+  const data = await fetchJson(`${BASE}/${resource}?page=1&limit=10`);
+
+  // caso 1: respuesta en data.results
+  if (Array.isArray(data.results)) {
+    return data.results.map(item => ({
+      uid:    item.uid,
+      name:   item.name    || item.title || item.properties?.name,
+      entity: resource
+    }));
+  }
+
+  // caso 2: respuesta en data.result.results (swapi.tech según docs)
+  if (data.result && Array.isArray(data.result.results)) {
+    return data.result.results.map(item => ({
+      uid:    item.uid,
+      name:   item.properties.name || item.properties.title,
+      entity: resource
+    }));
+  }
+
+  console.error("SWAPI returned unexpected shape:", data);
+  return [];
+}
+
+/**
+ * Trae un único ítem por UID.
+ */
+export async function getOne(resource, uid) {
+  const data = await fetchJson(`${BASE}/${resource}/${uid}`);
+  const item = data.result || data;
+  return {
+    uid,
+    entity:     resource,
+    name:       item.properties?.name || item.properties?.title || item.name,
+    properties: item.properties || {}
+  };
 }

@@ -1,127 +1,182 @@
+// src/scss/custom.scss
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+
+
 // 1) Bootstrap functions & variables
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 
 // 2) Theme overrides
-$body-bg:        #121212 !default;
-$body-color:     #e0e0e0  !default;
-$link-color:     #f44336  !default;
-$link-hover-color: darken($link-color, 10%) !default;
-$card-bg:        #1e1e1e  !default;
-$navbar-dark-bg: #000     !default;
-$btn-outline-warning-color:        $link-color !default;
-$btn-outline-warning-border-color: $link-color !default;
-$btn-outline-warning-hover-bg:     $link-color !default;
-$btn-outline-warning-hover-color:  #fff      !default;
+$body-bg:                           #121212;
+$body-color:                        #e0e0e0;
+$link-color:                        #f44336;
+$link-hover-color:                  darken($link-color, 10%);
+$card-bg:                           #1e1e1e;
+$navbar-dark-bg:                    #000;
+$btn-outline-warning-color:        $link-color;
+$btn-outline-warning-border-color: $link-color;
+$btn-outline-warning-hover-bg:     $link-color;
+$btn-outline-warning-hover-color:  #fff;
 
-// 3) Star Jedi font
-@font-face {
-  font-family: "StarJedi";
-  src: url("/fonts/StarJedi.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-h1, h2, .navbar-brand {
-  font-family: "StarJedi", sans-serif;
+// 3) Tipografía general para títulos y navbar
+h1, h2, .navbar-brand, .nav-link {
+  font-family:'Orbitron', sans-serif;
 }
 
-// 4) Bootstrap core
-@import "bootstrap/scss/bootstrap";
-
-// 5) Global styles
+// y si quieres que TODO el body use Space Grotesk:
 body {
   background: $body-bg;
   color: $body-color;
+  position: relative;
+  overflow-x: hidden;
+  font-family:'Orbitron', sans-serif;
 }
 
-// 6) Listing styles
+
+// 5) Bootstrap core (con tus overrides ya aplicados)
+@import "bootstrap/scss/bootstrap";
+
+// 6) Global styles
+body {
+  background: $body-bg;
+  color: $body-color;
+  position: relative;
+  overflow-x: hidden;
+}
+
+// 7) Grid de listados
 .listing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
 }
+
+// 8) Card styles
 .card-dark {
   background-color: $card-bg;
   color: $body-color;
   border: none;
+  border-radius: .5rem;
+  overflow: hidden;
   position: relative;
   transition: transform .3s, box-shadow .3s;
-  &:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 0 10px $link-color;
-  }
+
   .card-img-top {
     height: 220px;
     object-fit: cover;
+    display: block;
   }
-  &:after {
+
+  .card-body {
+    text-align: center;
+  }
+
+  .btn-databank {
+    @extend .btn;
+    @extend .btn-outline-warning;
+    font-size: .9rem;
+  }
+
+  &::after {
     content: "";
     position: absolute;
     inset: 0;
-    box-shadow: 0 0 0 rgba($link-color,0);
+    box-shadow: 0 0 0 rgba($link-color, 0);
     transition: box-shadow .3s;
   }
-  &:hover:after {
-    box-shadow: 0 0 20px rgba($link-color,.8);
+
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 0 15px rgba($link-color, .6);
   }
-  .btn-databank {
-    @extend .btn, .btn-outline-warning;
-    font-size: .9rem;
+
+  &:hover::after {
+    box-shadow: 0 0 20px rgba($link-color, .8);
   }
 }
 
-// 7) Detail styles
+// 9) Detalle de ficha
 .detail-card {
   background: $card-bg;
   color: $body-color;
   border: none;
   margin-bottom: 2rem;
+
   .detail-main {
     display: flex;
     flex-wrap: wrap;
+
     .detail-image {
       flex: 1 1 40%;
       img {
-        width: 100%; height: auto; object-fit: cover;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
       }
     }
+
     .detail-info {
-      flex: 1 1 60%; padding: 1.5rem;
-      h2 { margin-bottom: 1rem; color: #fff; }
-      p  { line-height: 1.5; }
+      flex: 1 1 60%;
+      padding: 1.5rem;
+
+      h2 {
+        margin-bottom: 1rem;
+        color: #fff;
+      }
+      p {
+        line-height: 1.5;
+      }
       .btn-fav {
-        @extend .btn, .btn-outline-warning;
+        @extend .btn;
+        @extend .btn-outline-warning;
         margin-bottom: 1rem;
       }
     }
   }
+
   .detail-footer {
     border-top: 1px solid #333;
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(120px,1fr));
-    gap: 1rem; padding: 1rem 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+
     .footer-item {
       strong {
-        display: block; margin-bottom: .3rem;
-        color: $link-color; text-transform: uppercase; font-size: .8rem;
+        display: block;
+        margin-bottom: .3rem;
+        color: $link-color;
+        text-transform: uppercase;
+        font-size: .8rem;
       }
       ul {
-        list-style: none; padding: 0;
+        list-style: none;
+        padding: 0;
         li {
           font-size: .85rem;
-          &::before { content: "• "; color: $link-color; }
+          &::before {
+            content: "• ";
+            color: $link-color;
+          }
         }
       }
     }
   }
 }
 
-// 8) Starfield styles
+// 10) Starfield background
 .starfield {
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
 }
 .star {
-  position: absolute; width: 2px; height: 2px;
+  position: absolute;
+  width: 2px; height: 2px;
   background: rgba(255,255,255,0.8);
   animation: drift linear infinite;
 }
@@ -130,14 +185,20 @@ body {
   to   { transform: translateY(-200vh) translateX(100vw); }
 }
 
-// 9) Opening Crawl
+// 11) Opening crawl
 .opening-crawl {
-  position: relative; height: 100vh; overflow: hidden; perspective: 400px;
-  background: radial-gradient(ellipse at center,#111 0%,#000 80%);
-  color: #ffe81f; text-align: center;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  perspective: 400px;
+  background: radial-gradient(ellipse at center, #111 0%, #000 80%);
+  color: #ffe81f;
+  text-align: center;
 }
 .opening-crawl__content {
-  position: absolute; bottom: -100%; width: 80%; left: 10%;
+  position: absolute;
+  bottom: -100%;
+  width: 80%; left: 10%;
   transform-origin: 50% 100%;
   animation: crawl 60s linear forwards;
 }
@@ -146,13 +207,18 @@ body {
   100% { transform: rotateX(20deg) translateY(-200%); }
 }
 
-// 10) Hyperdrive bar
+// 12) Hyperdrive bar
 .hyperdrive {
-  height: 4px; background: #333; position: relative;
-  margin-top: -4px; overflow: hidden;
+  height: 4px;
+  background: #333;
+  position: relative;
+  margin-top: -4px;
+  overflow: hidden;
+
   &::before {
     content: "";
-    position: absolute; left: -20%; width: 20%; height: 100%;
+    position: absolute;
+    left: -20%; width: 20%; height: 100%;
     background: linear-gradient(90deg, transparent, $link-color, transparent);
     animation: jump 1s infinite;
   }
@@ -161,4 +227,1395 @@ body {
   0%   { left: -20%; }
   50%  { left: 100%; }
   100% { left: -20%; }
+}
+
+// 13) Sección Databank + carrusel horizontal
+.databank-section {
+  margin: 2rem 0;
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    h2 {
+      color: #fff;
+      font-family:'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin: 0;
+    }
+    .see-all {
+      font-size: .9rem;
+      color: $link-color;
+      text-decoration: none;
+      text-transform: uppercase;
+      &:hover { color: $link-hover-color; }
+    }
+  }
+
+  .carousel {
+    position: relative;
+    .carousel-track {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: .5rem 0;
+      &::-webkit-scrollbar { display: none; }
+    }
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2.5rem; height: 2.5rem;
+      background: rgba(0,0,0,.6);
+      border-radius: 50%;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 1;
+      transition: background .2s;
+      &:hover { background: rgba(0,0,0,.8); }
+      &.prev { left: .5rem; }
+      &.next { right: .5rem; }
+    }
+  }
+}
+
+// 14) Navbar estilo Databank
+.sw-navbar {
+  background-color: $navbar-dark-bg !important;
+  padding: .5rem 1rem;
+
+  .navbar-brand {
+    display: flex; align-items: center;
+    .sw-logo {
+      height: 48px;
+      margin-right: .75rem;
+    }
+  }
+
+  .sw-menu {
+    .nav-link {
+      font-family:'Orbitron', sans-serif;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      color: rgba($body-color, .75);
+      margin: 0 .5rem;
+      padding: 0.5rem 0;
+      transition: color .2s;
+      &.active, &:hover {
+        color: $link-color;
+      }
+    }
+  }
+
+  .btn-outline-warning {
+    border-color: $link-color;
+    color: $link-color;
+    &:hover {
+      background-color: $link-color;
+      color: #fff;
+    }
+  }
+}
+
+// 15) Placeholder en .card-img-top si falla la carga
+.card-dark .card-img-top {
+  background: url("/img/placeholder.png") center/cover no-repeat;
+}
+
+// Sticky footer
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background: rgba(18,18,18,0.95);
+  text-align: center;
+  padding: 0.75rem 0;
+  animation: footer-glow 2s ease-in-out infinite alternate;
+}
+
+// Animación tipo “glow” con el color de acento ($link-color)
+@keyframes footer-glow {
+  from {
+    box-shadow: 0 -2px 8px rgba($link-color, 0.3);
+  }
+  to {
+    box-shadow: 0 -2px 20px rgba($link-color, 0.6);
+  }
+}
+.card-dark {
+  background-color: $card-bg;
+  color: $body-color;
+  border: none;
+  border-radius: .5rem;
+  overflow: hidden;
+  position: relative;
+  transition: transform .3s, box-shadow .3s;
+
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .card-body {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 0 15px rgba($link-color, .6);
+  }
+
+  /* notch bottom */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 20px;
+    background: $card-bg;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+}
+
+.databank-section {
+  margin: 2rem 0;
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h2 {
+      color: #fff;
+      font-family:'Orbitron', sans-serif;
+      letter-spacing: .1em;
+    }
+
+    .see-all {
+      color: $link-color;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .9rem;
+      &:hover {
+        color: $link-hover-color;
+      }
+    }
+  }
+}
+// src/scss/_cards.scss
+
+// 1) Variables de colores y tamaños
+$card-bg:    #1e1e1e;
+$card-accent: #e50914; // color de la línea superior
+$card-text:  #fff;
+$card-radius: 4px;
+$card-width: 200px;
+$card-padding: 12px;
+$card-notchesize: 12px;
+$font-stack:  'Matterhorn', sans-serif;
+
+// 2) Mixin para el notch / muesca inferior
+@mixin notch-bottom($size, $color) {
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: -#{$size};
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: #{$size} solid transparent;
+    border-right: #{$size} solid transparent;
+    border-top: #{$size} solid $color;
+  }
+}
+
+// 3) Estilos de la card
+.card-item {
+  width: $card-width;
+  background: $card-bg;
+  border-radius: $card-radius;
+  color: $card-text;
+  font-family: $font-stack;
+  overflow: hidden;
+  margin: 0 $card-padding $card-padding;
+  @include notch-bottom($card-notchesize, $card-bg);
+
+  .card-thumb {
+    width: 100%;
+    height: 110px;
+    background: darken($card-bg, 5%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // Si más adelante pones <img>, haz que cubra:
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .card-body {
+    padding: $card-padding;
+    text-align: left;
+
+    .card-title {
+      font-size: 1rem;
+      line-height: 1.2;
+      margin: 0;
+      color: $card-text;
+    }
+  }
+}
+
+// 4) Contenedor carousel genérico (sin dependencia de react-multi-carousel)
+.carousel-wrapper {
+  display: flex;
+  overflow-x: auto;
+  padding: $card-padding 0;
+  scroll-snap-type: x mandatory;
+
+  .card-item {
+    scroll-snap-align: start;
+  }
+}
+// en tu central de estilos
+.center-text {
+  color: #fff;
+  text-align: center;
+  margin: 2rem 0;
+}
+.carousel-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+.carousel-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+.section-carousel {
+  padding: 2rem;
+  .section-title {
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .no-data {
+    color: #ccc;
+    text-align: center;
+  }
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+  background: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  .card-image {
+    height: 150px;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .placeholder-image {
+      color: #777;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+  .card-title {
+    padding: 0.5rem;
+    font-weight: bold;
+  }
+}
+.card-item {
+  display: inline-block;
+  width: 180px;
+  margin: 0 8px;
+  text-decoration: none;
+  color: #fff;
+  .card-thumb {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background: #222;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    &.no-image .card-no-image {
+      display: flex;
+    }
+    .card-no-image {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      align-items: center;
+      justify-content: center;
+      color: #777;
+      font-size: 0.8rem;
+      background: #111;
+    }
+  }
+  .card-title {
+    margin-top: 6px;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+// Variables de color
+$card-bg: #1a1a1a;
+$accent: #f44336;         // rojo Star Wars
+$decal-color: #666;
+$radius: 8px;
+
+// Clip-path para notch inferior
+$notch-size: 12px;
+$clip-path-card: polygon(
+  0 0,
+  100% 0,
+  100% calc(100% - #{$notch-size}),
+  60% calc(100% - #{$notch-size}),
+  50% 100%,
+  40% calc(100% - #{$notch-size}),
+  0 calc(100% - #{$notch-size})
+);
+
+.card-item {
+  display: block;
+  width: 200px;
+  background: $card-bg;
+  color: white;
+  text-decoration: none;
+  border-radius: $radius;
+  overflow: hidden;
+  clip-path: $clip-path-card;
+  position: relative;
+  transition: transform .3s ease, box-shadow .3s ease;
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 20px rgba($accent, .6);
+  }
+
+  &__decal {
+    position: absolute;
+    top: 8px; left: 12px;
+    width: 40px; height: 4px;
+    background: $decal-color;
+    &::after {
+      content: "";
+      position: absolute;
+      top: -6px; right: -8px;
+      width: 20px; height: 4px;
+      background: $decal-color;
+      transform: rotate(20deg);
+    }
+  }
+
+  &__img-container {
+    width: 100%;
+    height: 120px;
+    background: #000;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__details {
+    position: relative;
+    padding: 12px 12px 24px; // espacio para notch
+    background: $card-bg;
+  }
+
+  &__fav-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: transparent;
+    border: none;
+    color: $accent;
+    font-size: 1.2rem;
+    cursor: pointer;
+    outline: none;
+    z-index: 2;
+    &:hover { color: lighten($accent, 10%); }
+  }
+
+  &__title {
+    margin: 0;
+    padding-top: 8px;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  &__notch {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: $notch-size;
+    background: transparent;
+    // nada más: el clip-path ya se ocupa
+  }
+}
+.entry-details-card {
+  position: relative;
+  background: #1b1b1b;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transform: translateY(0) scale(1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+}
+
+// efecto lightsaber
+.card-dark {
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: 0 0 20px rgba(244,67,54,0);
+    transition: box-shadow 0.3s ease;
+  }
+  &:hover:after {
+    box-shadow: 0 0 20px rgba(244,67,54,0.8);
+  }
+}
+
+.entry-details-card-inner {
+  position: relative;
+}
+
+// placeholder si no hay imagen
+.image-placeholder {
+  width: 100%;
+  height: 140px;
+  background: #2a2a2a;
+}
+
+// contenedor imagen real
+.image-container {
+  width: 100%;
+  height: 140px;
+  img.image-card {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// título dentro de la card
+.details-container {
+  padding: 0.75rem;
+  background: #1b1b1b;
+}
+.details-container-title {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+// botón estrella
+.fav-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.4);
+  transition: color 0.2s ease;
+  z-index: 10;
+
+  &.active {
+    color: #f1c40f;
+  }
+  &:hover {
+    color: #f1c40f;
+  }
+}
+
+// CardItem.scss
+
+.card-dark {
+  position: relative;
+  width: 200px;
+  margin: 0 .5rem;
+  background: #111;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease;
+  cursor: pointer;
+
+  // hover lift + glow
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+
+    &:after {
+      box-shadow: 0 0 20px rgba(255, 255, 255, .4);
+    }
+  }
+
+  // lightsaber glow pipe
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    transition: box-shadow .3s ease;
+    pointer-events: none;
+    border-radius: 8px;
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .card-image {
+    flex: 1 1 auto;
+    height: 0;
+    padding-top: 56.25%; // 16:9
+    background-size: cover;
+    background-position: center center;
+    background-color: #222;
+    position: relative;
+
+    .card-placeholder {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 40px; height: 40px;
+      margin: -20px 0 0 -20px;
+      border: 2px dashed #555;
+      border-radius: 50%;
+    }
+  }
+
+  .card-details {
+    flex: 0 0 auto;
+    background: #191919;
+    padding: .75rem .5rem;
+    border-top: 4px solid transparent;
+
+    .card-title {
+      margin: 0;
+      font-size: 1rem;
+      color: #fff;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .card-fav-btn {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    background: none;
+    border: none;
+    color: gold;
+    font-size: 1.2rem;
+    pointer-events: all;
+  }
+}
+@font-face {
+  font-family: "StarJedi";
+  src: url("/fonts/StarJedi.ttf") format("truetype");
+}
+
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family:'Orbitron', sans-serif;
+}
+
+.sw-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #111;
+  padding: 0.5rem 1rem;
+  .sw-menu {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    li a {
+      color: #f44336;
+      text-decoration: none;
+      &:hover { color: #fff; }
+    }
+  }
+  .sw-fav a {
+    color: #ffeb3b;
+    text-decoration: none;
+  }
+  .sw-logo { height: 40px; }
+}
+.sw-navbar {
+  .sw-logo {
+    /* Antes tal vez tenías algo como width: 100px; */
+    width: 180px;    /* Ajusta este valor a tu gusto */
+    height: auto;
+    display: block;  /* para que respete margin, padding, etc */
+  }
+  /* ... resto de reglas para la navbar ... */
+}
+
+/* ------------------------------------------------------------
+   1) Estructura de la grid
+   ------------------------------------------------------------ */
+.carousel-wrapper > li {
+  list-style: none;
+}
+
+/* ------------------------------------------------------------
+   2) Contenedor principal y proporción 16x9
+   ------------------------------------------------------------ */
+.entity-container {
+  position: relative;
+  overflow: hidden;
+  &.ratio-16x9 .entry-details-card-container {
+    padding-top: 56.25%;
+    position: relative;
+  }
+}
+
+/* ------------------------------------------------------------
+   3) Máscara e interacción
+   ------------------------------------------------------------ */
+.entity-mask {
+  position: relative;
+}
+.entity-mask .outer-link {
+  display: block;
+  position: absolute;
+  inset: 0;
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------
+   4) Box de la card (fondo oscuro, bordes redondeados)
+   ------------------------------------------------------------ */
+.default-box.entity-box {
+  position: absolute;
+  inset: 0;
+  background: #1b1b1b;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------
+   5) Imagen
+   ------------------------------------------------------------ */
+.image-container {
+  position: absolute;
+  inset: 0;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .image-card {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------------
+   6) Pie con título dentro de la card
+   ------------------------------------------------------------ */
+.details-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #1b1b1b;
+}
+.details-container-wrapper {
+  padding: 0.75rem;
+}
+.details-container-title {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+  line-height: 1.2;
+}
+
+/* ------------------------------------------------------------
+   7) Notch inferior (la muesca decorativa)
+   ------------------------------------------------------------ */
+.notch-contain {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: #1b1b1b;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 12px),
+    60% calc(100% - 12px),
+    50% 100%,
+    40% calc(100% - 12px),
+    0 calc(100% - 12px)
+  );
+}
+
+/* ------------------------------------------------------------
+   8) Detalles exteriores (título flotante y decal)
+   ------------------------------------------------------------ */
+.entity-details {
+  margin-top: 0.5rem;
+  .decal-contain .decal {
+    width: 40px;
+    height: 4px;
+    background: #f44336;
+    margin-bottom: 0.5rem;
+  }
+  .title-link .title {
+    font-size: 1rem;
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   9) Botón de favorito (estrella absoluta)
+   ------------------------------------------------------------ */
+.entity-fav-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+  transition: background .2s;
+  &:hover { background: rgba(0,0,0,0.8); }
+  &.active { color: gold; }
+}
+
+/* ------------------------------------------------------------
+   10) Hover general con glow
+   ------------------------------------------------------------ */
+.entity-container:hover .default-box.entity-box {
+  box-shadow: 0 0 20px rgba(244,67,54,0.6);
+  transform: translateY(-4px) scale(1.02);
+  transition: transform .3s, box-shadow .3s;
+}
+
+.carousel-wrapper {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+.col.item {
+  flex: 0 0 auto;
+  width: 180px;
+}
+
+.entity-container {
+  background: #1b1b1b;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image-container {
+  position: relative;
+  height: 140px;
+  background: #2a2a2a;
+  img.image-card {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .entity-fav-btn {
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(0,0,0,0.6); border: none; color: #fff;
+    font-size: 1.2rem; padding: 4px; border-radius: 50%;
+    cursor: pointer;
+    &.active { color: gold; }
+  }
+}
+
+.details-container {
+  padding: 0.5rem;
+  .details-container-title {
+    margin: 0; font-size: 1rem; color: #fff;
+  }
+}
+
+/* placeholder styling */
+.card-dark.placeholder {
+  height: 200px;
+  display: flex; align-items: center; justify-content: center;
+}
+/* ------------------------------------------------------------
+   Hover lift + glow
+   ------------------------------------------------------------ */
+.entity-container {
+  // Ajusta el selector si tu contenedor es .card-dark en lugar de .entity-container
+
+  // Transición suave para transform y sombra
+  transition: transform .3s ease, box-shadow .3s ease;
+  
+  &:hover {
+    // Eleva y escala un poquito
+    transform: translateY(-8px) scale(1.03);
+    // Sombra base para dar volumen
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  // Efecto “lightsaber glow” adicional
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    // Sombra inicial transparente
+    box-shadow: 0 0 20px rgba(244, 67, 54, 0);
+    transition: box-shadow 0.3s ease;
+    pointer-events: none; // que no interfiera con clicks
+    border-radius: inherit; // respeta el radio de la tarjeta
+  }
+
+  &:hover::after {
+    // Cuando pasas por encima, activo el glow rojo
+    box-shadow: 0 0 20px rgba(244, 67, 54, 0.8);
+  }
+}
+/* ------------------------------------------------------------
+   Carousel: tarjetas con separación y scroll-snapping
+   ------------------------------------------------------------ */
+.carousel-wrapper {
+  display: flex;
+  gap: 1rem;                // espacio uniforme entre tarjetas
+  padding: 0.5rem 0;        // separa la fila de los bordes
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.col.item {
+  flex: 0 0 auto;           // que no se encojan ni estiren
+  scroll-snap-align: start; // para que encajen al hacer scroll
+  width: 200px;             // ancho fijo (ajústalo a tu gusto)
+}
+
+/* Opcional: quita bullets y márgenes de la lista */
+.carousel-wrapper {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+/* Si quieres un scrollbar más fino y estilizado: */
+.carousel-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.carousel-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+.sw-fav {
+  position: relative;
+
+  .sw-fav-btn {
+    @extend .btn;
+    @extend .btn-outline-warning;
+    font-family:'Orbitron', sans-serif;
+  }
+
+  .dropdown {
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background: $card-bg;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 4px;
+    padding: .5rem 0;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.5);
+    display: none;
+    z-index: 10;
+
+    &.show { display: block; }
+
+    .empty {
+      color: #999;
+      padding: .5rem 1rem;
+      font-size: .9rem;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .4rem 1rem;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+        &:hover { color: $link-hover-color; }
+      }
+
+      button {
+        background: none;
+        border: none;
+        color: $link-color;
+        font-size: 1.2rem;
+        line-height: 1;
+        cursor: pointer;
+        &:hover { color: darken($link-color,20%); }
+      }
+    }
+  }
+}
+/* en tu src/scss/custom.scss (o donde centralices) */
+
+     /* 1) Contenedor horizontal con snap */
+.databank-section {
+  .carousel-wrapper {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+    scroll-snap-type: x mandatory;
+    margin-bottom: 2rem;
+
+    /* ocultar bullets y márgenes de la lista */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 2) Cada item fijo y snap al inicio */
+  .col.item {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: 350px;    /* ancho mayor para enlarger cards */
+    position: relative;
+  }
+}
+
+/* 3) Notch + glow (lightsaber) en .entity-container */
+.entity-container {
+  background: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform .3s ease, box-shadow .3s ease;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: 0 0 20px rgba($link-color, 0);
+    transition: box-shadow .3s ease;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  &:hover::after {
+    box-shadow: 0 0 20px rgba($link-color, .8);
+  }
+}
+
+/* 4) La muesca inferior */
+.notch-contain {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 12px;
+  background: #1e1e1e;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 12px),
+    60% calc(100% - 12px),
+    50% 100%,
+    40% calc(100% - 12px),
+    0 calc(100% - 12px)
+  );
+}
+
+/* 5) Quitar esos “·” que se veían entre elementos */
+.col.item::before {
+  content: none !important;
+}
+
+
+// AL FINAL de custom.scss, tras @import "bootstrap";
+.entity-container {
+  position: relative;
+  overflow: hidden;
+  background: $card-bg;
+  border-radius: 8px;
+  transition: transform .3s ease, box-shadow .3s ease;
+
+  // notch inferior
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 40px; height: 20px;
+    background: $card-bg;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    pointer-events: none;
+  }
+
+  // hover lift + glow
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,.5);
+  }
+  &:hover::after {
+    // glow lightsaber
+    box-shadow: 0 0 20px rgba($link-color, .8);
+  }
+}
+.sw-menu {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    .nav-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      color: $body-color;
+      text-transform: uppercase;
+      &:hover, &.active { color: $link-color; }
+    }
+  }
+
+  .fav-dropdown {
+    position: relative;
+    .btn-fav-toggle {
+      background: none;
+      border: none;
+      color: $link-color;
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+    .fav-menu {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: $card-bg;
+      border: 1px solid darken($card-bg,10%);
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      min-width: 200px;
+      display: none;
+      &.show { display: block; }
+      li {
+        padding: 0.5rem 1rem;
+        color: $body-color;
+        cursor: pointer;
+        &:hover { background: darken($card-bg,5%); }
+      }
+    }
+  }
+
+
+// 5) Cards más grandes + glow + notch
+.col.item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 350px;
+  margin-right: 1rem;
+}
+
+.entity-container {
+  position: relative;
+  overflow: hidden;
+  background: $card-bg;
+  border-radius: 8px;
+  transition: transform .3s ease, box-shadow .3s ease;
+
+  // notch inferior
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 40px; height: 20px;
+    background: $card-bg;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    pointer-events: none;
+  }
+
+  // hover lift + glow
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,.5);
+  }
+  &:hover::after {
+    box-shadow: 0 0 20px rgba($link-color, .8);
+  }
+}
+
+// 6) Imagen y botón de fav
+.image-container {
+  position: relative;
+  height: 200px;
+  background: darken($card-bg,5%);
+  img.image-card {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .entity-fav-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    color: $link-color;
+    font-size: 1.5rem;
+    padding: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background .2s;
+    &.active { color: lighten($link-color,20%); }
+    &:hover { background: rgba(0,0,0,0.8); }
+  }
+}
+
+// 7) Pie con título
+.details-container {
+  padding: 0.75rem;
+  background: $card-bg;
+  .title-link { text-decoration: none; }
+  .details-container-title {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+  }
+}
+
+// 8) Footer glow fijo
+footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(18,18,18,0.95);
+  padding: 0.75rem;
+  text-align: center;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 -2px 8px rgba($link-color, .3); }
+  to   { box-shadow: 0 -2px 20px rgba($link-color, .6); }
+}
+
+
+/* custom.scss al final de las importaciones */
+.card-dark.entity-container {
+  position: relative;
+  overflow: hidden;
+  background: $card-bg;
+  border-radius: 8px;
+  transition: transform .3s ease, box-shadow .3s ease;
+
+  /* notch inferior */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 40px; height: 20px;
+    background: $card-bg;
+    clip-path: polygon(0 0,100% 0,50% 100%);
+    pointer-events: none;
+  }
+
+  /* hover lift + glow */
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,.5);
+  }
+  &:hover::after {
+    box-shadow: 0 0 20px rgba($link-color,.8);
+  }
+}
+// 9) Card styles (lightsaber glow + notch)
+.card-dark.entity-container {
+  width: 100%;
+  background: $card-bg;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform .3s ease, box-shadow .3s ease;
+
+  // notch inferior
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 40px; height: 20px;
+    background: $card-bg;
+    clip-path: polygon(0 0,100% 0,50% 100%);
+    pointer-events: none;
+  }
+
+  // hover lift
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,.5);
+  }
+
+  // lightsaber glow
+  &::after {
+    box-shadow: 0 0 0 rgba($link-color, 0);
+    transition: box-shadow .3s ease;
+  }
+  &:hover::after {
+    box-shadow: 0 0 20px rgba($link-color, .8);
+  }
+
+  .image-container {
+    position: relative;
+    height: 220px;
+    background: darken($card-bg, 5%);
+    img.image-card {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .entity-fav-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: rgba(0,0,0,.6); border: none;
+      color: #fff; font-size: 1.4rem;
+      padding: 4px; border-radius: 50%;
+      transition: background .2s, color .2s;
+      &.active { color: #f1c40f; }
+      &:hover { background: rgba(0,0,0,.8); }
+    }
+  }
+
+  .details-container {
+    padding: .75rem;
+    background: $card-bg;
+    .details-container-title {
+      margin: 0; font-size: 1.2rem; color: #fff;
+      text-align: center;
+    }
+  }
+}
+
+// 10) Single/detail card
+.detail-card {
+  background: $card-bg;
+  color: $body-color;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 2rem;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 40px; height: 20px;
+    background: $card-bg;
+    clip-path: polygon(0 0,100% 0,50% 100%);
+  }
+
+  .detail-main {
+    display: flex; flex-wrap: wrap;
+
+    .detail-image {
+      flex: 1 1 50%;
+      img { width:100%; height:auto; object-fit:cover; }
+    }
+    .detail-info {
+      flex: 1 1 50%; padding:1.5rem; position:relative;
+      h2 {
+        font-family:"StarJedi",sans-serif;
+        color:#fff; font-size:2rem; margin:0 0 1rem;
+      }
+      .btn-fav {
+        position:absolute; top:1.5rem; right:1.5rem;
+      }
+      p { line-height:1.6; }
+    }
+  }
+
+  .detail-footer {
+    border-top:1px solid #333;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:1rem; padding:1rem 1.5rem;
+
+    .footer-item {
+      strong {
+        display:block; margin-bottom:.3rem;
+        color:$link-color; text-transform:uppercase;
+        font-size:.75rem;
+      }
+      ul { list-style:none; padding:0; margin:0;
+        li { font-size:.85rem; &::before {
+            content:"• "; color:$link-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 11) Footer glow
+footer {
+  position:fixed; bottom:0; left:0; width:100%; z-index:50;
+  background: rgba(18,18,18,0.95); text-align:center;
+  padding:.75rem 0;
+  animation: footer-glow 2s ease-in-out infinite alternate;
+}
+@keyframes footer-glow {
+  from { box-shadow: 0 -2px 8px rgba($link-color,0.3); }
+  to   { box-shadow: 0 -2px 20px rgba($link-color,0.6); }
 }

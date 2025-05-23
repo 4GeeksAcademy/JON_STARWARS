@@ -1,42 +1,47 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { GlobalContext } from "../store";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useGlobalContext } from "../store/useGlobalReducer";
 
 export default function Navbar() {
-  const { state } = useContext(GlobalContext);
+  const { favorites, removeFavorite } = useGlobalContext();
+  const [open, setOpen] = useState(false);
 
   return (
-    <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container-fluid">
-          <img
-            src="https://lumiere-a.akamaihd.net/v1/images/sw_logo_stacked_2x-52b4f6d33087_7ef430af.png?region=0,0,586,254"
-             alt="Star Wars Databank Logo"
-                height="40"
-                style={{ marginRight: "0.5rem" }}
-          />
+    <nav className="sw-navbar">
+      <NavLink to="/">
+        <img src="/assets/starwars-logo.jpg" alt="Star Wars" className="sw-logo" />
+      </NavLink>
 
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navMenu"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="navMenu">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item"><Link className="nav-link" to="/demo">Personajes</Link></li>
-              <li className="nav-item"><Link className="nav-link" to="/planets">Planetas</Link></li>
-              <li className="nav-item"><Link className="nav-link" to="/vehicles">Vehículos</Link></li>
-            </ul>
-            <Link to="/favorites" className="btn btn-outline-warning">
-              Favoritos <span className="badge bg-dark">{state.favorites.length}</span>
-            </Link>
-          </div>
+      <ul className="sw-menu">
+        <li><NavLink to="/" end>Personajes</NavLink></li>
+        <li><NavLink to="/planetas">Planetas</NavLink></li>
+        <li><NavLink to="/vehiculos">Vehículos</NavLink></li>
+      </ul>
+
+      <div className="sw-fav">
+        <button
+          className="sw-fav-btn"
+          onClick={() => setOpen(o => !o)}
+          aria-haspopup="true"
+          aria-expanded={open}
+        >
+          Favoritos ({favorites.length})
+        </button>
+
+        <div className={`dropdown ${open ? "show" : ""}`}>
+          {favorites.length === 0
+            ? <div className="empty">No tienes favoritos aún.</div>
+            : favorites.map(fav => (
+                <div key={`${fav.type}-${fav.uid}`} className="dropdown-item">
+                  <NavLink to={`/${fav.type}/${fav.uid}`} onClick={()=>setOpen(false)}>
+                    {fav.name}
+                  </NavLink>
+                  <button onClick={() => removeFavorite(fav)} aria-label="Eliminar">×</button>
+                </div>
+              ))
+          }
         </div>
-      </nav>
-      <div className="hyperdrive"></div>
-    </>
+      </div>
+    </nav>
   );
 }

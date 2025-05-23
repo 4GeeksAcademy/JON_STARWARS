@@ -1,17 +1,28 @@
+// src/pages/Layout.jsx
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar      from "../components/Navbar";
-import Footer      from "../components/Footer";
-import ScrollToTop from "../components/ScrollToTop";
-import Starfield   from "../components/Starfield";
+import Starfield from "../components/Starfield.jsx";
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
 
 export default function Layout() {
   return (
     <>
+      {/* FONDO DE ESTRELLAS */}
       <Starfield />
+
+      {/* BARRA SUPERIOR */}
       <Navbar />
-      <ScrollToTop />
-      <Outlet />
+
+      {/* CONTENIDO PRINCIPAL ENCIMA DEL STARFIELD */}
+      <main
+        className="content"
+        style={{ position: "relative", zIndex: 1, paddingTop: "4rem" }}
+      >
+        <Outlet />
+      </main>
+
+      {/* PIE DE PÁGINA */}
       <Footer />
     </>
   );

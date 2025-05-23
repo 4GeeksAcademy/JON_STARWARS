@@ -1,0 +1,98 @@
+// src/components/DetailCard.scss
+
+.detail-card {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 40px; height: 20px;
+    background: #1e1e1e;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+
+  .detail-main {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .detail-image {
+    flex: 1 1 50%;
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .detail-info {
+    flex: 1 1 50%;
+    padding: 1.5rem;
+    position: relative;
+
+    h2 {
+      color: #fff;
+      margin: 0 0 1rem;
+      font-size: 1.75rem;
+      font-family: "StarJedi", sans-serif;
+    }
+
+    p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .btn-fav {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      /* Ya hereda btn btn-outline-warning desde el JSX */
+    }
+  }
+
+  .detail-footer {
+    border-top: 1px solid #333;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+
+    .footer-item {
+      strong {
+        display: block;
+        margin-bottom: 0.25rem;
+        color: #f44336;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li {
+          font-size: 0.85rem;
+          margin-bottom: 0.3rem;
+          &::before {
+            content: "• ";
+            color: #f44336;
+          }
+          a {
+            color: #e0e0e0;
+            text-decoration: underline;
+            &:hover {
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
