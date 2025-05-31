@@ -13,7 +13,7 @@ async function fetchJson(url) {
  * Acepta tanto la forma `data.results` como `data.result.results`
  */
 export async function getAll(resource) {
-  const data = await fetchJson(`${BASE}/${resource}?page=1&limit=10`);
+  const data = await fetchJson(`${BASE}/${resource}?page=1&limit=12`);
 
   // caso 1: respuesta en data.results
   if (Array.isArray(data.results)) {

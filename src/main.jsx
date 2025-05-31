@@ -11,7 +11,6 @@ import { StoreProvider } from "./store/useGlobalReducer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // 🔴 Aquí es donde debe ir el Provider
   <StoreProvider>
     <BrowserRouter>
       <App />

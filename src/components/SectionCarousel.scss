@@ -1,61 +1,62 @@
-// src/components/SectionCarousel.scss
+/* ===========================================
+   SectionCarousel.scss
+   =========================================== */
 
-.carousel {
-  position: relative;
-  margin: 1rem 0;
+/* Contenedor general de la sección */
+.databank-section {
+  width: 100%;
+  margin-bottom: 2rem;
+}
 
-  .carousel-track {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 0.5rem 0;
+/* Encabezado con el título */
+.section-header {
+  margin-bottom: 1rem;
+  padding-left: 1rem; /* Separa del borde izquierdo */
+}
 
-    li.col.item {
-      scroll-snap-align: start;
-    }
-  }
+.section-title {
+  color: #f5f5f5;
+  font-size: 1.75rem;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3rem;
-    height: 3rem;
-    background: #fff;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-    z-index: 5;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+/* ===========================================
+   Grid de tarjetas: 4 columnas en escritorio,
+   2 en tablet y 1 en móvil, con mayor espacio
+   entre tarjetas para no verse amontonadas.
+   =========================================== */
+.grid-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 columnas iguales */
+  gap: 1.5rem;         /* Aumentamos el espacio entre filas/columnas */
+  padding: 0 1rem;     /* Margen horizontal para que no queden pegadas al borde */
+  list-style: none;
+  margin: 0 auto;      /* Centrar si hay espacio extra */
+  max-width: 1200px;   /* Limita el ancho total del grid en pantallas muy grandes */
+}
 
-    &:hover {
-      background: #f0f0f0;
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    &.prev {
-      left: 0.5rem;
-    }
-    &.next {
-      right: 0.5rem;
-    }
+/* Tablet: 2 columnas */
+@media (max-width: 768px) {
+  .grid-track {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;      /* Algo menos de espacio, pero sigue siendo generoso */
   }
 }
 
-/* Adaptaciones móviles */
-@media (max-width: 576px) {
-  .carousel {
-    .arrow {
-      width: 2.5rem;
-      height: 2.5rem;
-      font-size: 1.2rem;
-    }
+/* Móvil: 1 columna */
+@media (max-width: 480px) {
+  .grid-track {
+    grid-template-columns: 1fr;
+    padding: 0 0.5rem;
+    gap: 1rem;
   }
+}
+
+/* Cada <li> dentro del grid */
+.grid-item {
+  margin: 0;
+  padding: 0;
 }
